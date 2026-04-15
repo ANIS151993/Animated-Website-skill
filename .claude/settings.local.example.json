@@ -1,0 +1,21 @@
+{
+  "_comment": "Copy this file to .claude/settings.local.json and fill in your own API keys. Never commit settings.local.json.",
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp *)",
+      "Bash(timeout 30 npx -y stitch-mcp@latest)",
+      "Bash(STITCH_API_KEY=\"YOUR_STITCH_API_KEY_HERE\" GOOGLE_CLOUD_PROJECT=\"your-gcp-project\" timeout 30 npx -y stitch-mcp@latest)",
+      "Bash(gcloud auth *)",
+      "Bash(claude settings *)",
+      "Skill(update-config)",
+      "Bash(python3 *)",
+      "Bash(infsh --version)",
+      "Bash(infsh login *)",
+      "Bash(infsh me *)",
+      "WebSearch"
+    ]
+  },
+  "enabledPlugins": {
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true
+  }
+}

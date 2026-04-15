@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Animated-Website-skill · Setup Guide</title>
+<meta name="description" content="Step-by-step setup for the Animated-Website-skill — a 7-step AI pipeline that turns a text brief into a complete animated single-page website." />
+<meta property="og:title" content="Animated-Website-skill · Setup Guide" />
+<meta property="og:description" content="Wire up Stitch, Magic, Firecrawl, UI UX Pro Max & Nano Banana 2 in Claude Code." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-2: #12121a;
+    --card: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #e4e4e7;
+    --muted: #a1a1aa;
+    --accent-1: #8b5cf6;
+    --accent-2: #ec4899;
+    --accent-3: #06b6d4;
+    --accent-4: #10b981;
+    --accent-5: #f59e0b;
+  }
+  * { font-family: 'Space Grotesk', system-ui, sans-serif; }
+  code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* Animated gradient background */
+  .bg-aurora {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.25) 0%, transparent 45%),
+      radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.20) 0%, transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(6, 182, 212, 0.18) 0%, transparent 50%);
+    animation: aurora 18s ease infinite alternate;
+  }
+  @keyframes aurora {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-40px, 30px) scale(1.1); }
+  }
+
+  /* Grid pattern */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  }
+
+  /* Glass card */
+  .glass {
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 40%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Step cards */
+  .step-card {
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .step-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, var(--glow, rgba(139,92,246,.08)) 100%);
+    opacity: 0;
+    transition: opacity .4s;
+    pointer-events: none;
+  }
+  .step-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--glow-border, rgba(139,92,246,.35));
+    box-shadow: 0 20px 60px -20px var(--glow-shadow, rgba(139,92,246,.25));
+  }
+  .step-card:hover::before { opacity: 1; }
+
+  /* Code blocks */
+  .code-block {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+  }
+  .code-block pre {
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .copy-btn:hover { color: var(--text); background: rgba(255,255,255,0.12); }
+  .copy-btn.copied { color: var(--accent-4); border-color: var(--accent-4); }
+
+  /* Numbered badge */
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    background: var(--num-bg, linear-gradient(135deg, #8b5cf6, #ec4899));
+    color: white;
+    box-shadow: 0 8px 24px -8px var(--num-shadow, rgba(139,92,246,.5));
+  }
+
+  /* Progress dots nav */
+  .progress-nav {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: none;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  @media (min-width: 1280px) { .progress-nav { display: flex; } }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: all .3s;
+    cursor: pointer;
+    position: relative;
+  }
+  .dot.active { background: var(--accent-1); transform: scale(1.5); }
+  .dot::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity .2s;
+    background: var(--bg-2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .dot:hover::after { opacity: 1; }
+
+  /* Hero float */
+  .float { animation: float 6s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+  /* Pulse ring */
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+  .pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--accent-1);
+    animation: pulse-ring 2s cubic-bezier(.2,.8,.2,1) infinite;
+  }
+
+  /* Pipeline flow */
+  .flow-step {
+    position: relative;
+    transition: transform .3s;
+  }
+  .flow-step:hover { transform: scale(1.08); }
+  .flow-arrow {
+    color: var(--muted);
+    opacity: 0.4;
+  }
+
+  /* Marquee */
+  .marquee {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 30s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Checklist */
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    transition: all .3s;
+    cursor: pointer;
+  }
+  .check-item:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15); }
+  .check-item.done { background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3); }
+  .check-item .check-box {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--muted);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+    flex-shrink: 0;
+  }
+  .check-item.done .check-box { background: var(--accent-4); border-color: var(--accent-4); }
+  .check-item.done .check-box svg { opacity: 1; transform: scale(1); }
+  .check-item .check-box svg { opacity: 0; transform: scale(0.5); transition: all .2s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="bg-aurora"></div>
+<div class="bg-grid"></div>
+
+<!-- Progress Nav -->
+<nav class="progress-nav" aria-label="Section navigation">
+  <a href="#hero" class="dot" data-label="Top"></a>
+  <a href="#pipeline" class="dot" data-label="Pipeline"></a>
+  <a href="#steps" class="dot" data-label="Setup Steps"></a>
+  <a href="#checklist" class="dot" data-label="Checklist"></a>
+  <a href="#workflow" class="dot" data-label="Workflow"></a>
+</nav>
+
+<!-- Top bar -->
+<header class="fixed top-0 inset-x-0 z-30 glass border-b">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-2 font-bold text-lg">
+      <span class="text-2xl">🎨</span>
+      <span class="gradient-text">Animated-Website-skill</span>
+    </a>
+    <div class="flex items-center gap-6 text-sm">
+      <a href="#pipeline" class="hidden md:inline text-zinc-400 hover:text-white transition">Pipeline</a>
+      <a href="#steps" class="hidden md:inline text-zinc-400 hover:text-white transition">Setup</a>
+      <a href="#workflow" class="hidden md:inline text-zinc-400 hover:text-white transition">Workflow</a>
+      <a href="https://github.com/ANIS151993/Animated-Website-skill"
+         class="inline-flex items-center gap-2 bg-white text-black px-4 py-2 rounded-lg font-medium hover:scale-105 transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        Star
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="hero" class="relative pt-32 pb-20 px-6">
+  <div class="max-w-6xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 glass px-4 py-1.5 rounded-full text-xs text-zinc-300 mb-6 reveal">
+      <span class="relative flex h-2 w-2">
+        <span class="pulse-ring"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+      </span>
+      Powered by Claude Code · 5 AI tools · 1 command
+    </div>
+
+    <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 reveal">
+      Ship an <span class="gradient-text">animated website</span><br/>
+      from a one-line brief.
+    </h1>
+
+    <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 reveal">
+      A 7-step AI pipeline that wires up <b class="text-white">Stitch</b>, <b class="text-white">21st.dev Magic</b>,
+      <b class="text-white">Firecrawl</b>, <b class="text-white">UI UX Pro Max</b>, and
+      <b class="text-white">Nano Banana 2</b> inside Claude Code — so you can ship a polished landing page in minutes.
+    </p>
+
+    <div class="flex flex-wrap items-center justify-center gap-4 reveal">
+      <a href="#steps" class="bg-gradient-to-r from-violet-500 to-pink-500 text-white px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-violet-500/30">
+        🚀 Start Setup
+      </a>
+      <a href="https://github.com/ANIS151993/Animated-Website-skill" class="glass px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition">
+        ⭐ View on GitHub
+      </a>
+    </div>
+
+    <!-- Tool logos marquee -->
+    <div class="mt-16 overflow-hidden reveal">
+      <p class="text-xs uppercase tracking-widest text-zinc-500 mb-6">Powered by</p>
+      <div class="marquee">
+        <div class="flex items-center gap-12 flex-shrink-0">
+          <span class="text-2xl font-bold text-zinc-400">🧠 Claude</span>
+          <span class="text-2xl font-bold text-zinc-400">🎨 UI UX Pro Max</span>
+          <span class="text-2xl font-bold text-zinc-400">🖼️ Stitch</span>
+          <span class="text-2xl font-bold text-zinc-400">✨ 21st.dev</span>
+          <span class="text-2xl font-bold text-zinc-400">🌐 Firecrawl</span>
+          <span class="text-2xl font-bold text-zinc-400">🍌 Nano Banana 2</span>
+        </div>
+        <div class="flex items-center gap-12 flex-shrink-0">
+          <span class="text-2xl font-bold text-zinc-400">🧠 Claude</span>
+          <span class="text-2xl font-bold text-zinc-400">🎨 UI UX Pro Max</span>
+          <span class="text-2xl font-bold text-zinc-400">🖼️ Stitch</span>
+          <span class="text-2xl font-bold text-zinc-400">✨ 21st.dev</span>
+          <span class="text-2xl font-bold text-zinc-400">🌐 Firecrawl</span>
+          <span class="text-2xl font-bold text-zinc-400">🍌 Nano Banana 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pipeline flow -->
+<section id="pipeline" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">The <span class="gradient-text">7-Step Pipeline</span></h2>
+      <p class="text-zinc-400 max-w-2xl mx-auto">Each step is a dedicated tool. Optional tools fall back gracefully — the pipeline never halts.</p>
+    </div>
+
+    <div class="glass rounded-2xl p-8 reveal">
+      <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+        <!-- Step 1 -->
+        <div class="flow-step text-center">
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-3xl mb-2 shadow-lg shadow-violet-500/40">📝</div>
+          <div class="text-xs text-zinc-500 uppercase tracking-widest">Step 1</div>
+          <div class="font-semibold text-sm">Brief & Plan</div>
+        </div>
+        <svg class="flow-arrow w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="flow-step text-center">
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-3xl mb-2 shadow-lg shadow-pink-500/40">🎨</div>
+          <div class="text-xs text-zinc-500 uppercase tracking-widest">Step 2</div>
+          <div class="font-semibold text-sm">Design Tokens</div>
+        </div>
+        <svg class="flow-arrow w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="flow-step text-center">
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-3xl mb-2 shadow-lg shadow-orange-500/40">🌐</div>
+          <div class="text-xs text-zinc-500 uppercase tracking-widest">Step 3</div>
+          <div class="font-semibold text-sm">Scrape</div>
+        </div>
+        <svg class="flow-arrow w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="flow-step text-center">
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-3xl mb-2 shadow-lg shadow-blue-500/40">🖼️</div>
+          <div class="text-xs text-zinc-500 uppercase tracking-widest">Step 4</div>
+          <div class="font-semibold text-sm">Layouts</div>
+        </div>
+        <svg class="flow-arrow w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="flow-step text-center">
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-yellow-400 to-amber-400 flex items-center justify-center text-3xl mb-2 shadow-lg shadow-yellow-500/40">🍌</div>
+          <div class="text-xs text-zinc-500 uppercase tracking-widest">Step 5</div>
+          <div class="font-semibold text-sm">Imagery</div>
+        </div>
+        <svg class="flow-arrow w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="flow-step text-center">
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center text-3xl mb-2 shadow-lg shadow-black/40 border border-white/10">✨</div>
+          <div class="text-xs text-zinc-500 uppercase tracking-widest">Step 6</div>
+          <div class="font-semibold text-sm">Components</div>
+        </div>
+        <svg class="flow-arrow w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="flow-step text-center">
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-3xl mb-2 shadow-lg shadow-emerald-500/40">🚀</div>
+          <div class="text-xs text-zinc-500 uppercase tracking-widest">Step 7</div>
+          <div class="font-semibold text-sm">Ship</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Setup Steps -->
+<section id="steps" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <div class="inline-block text-xs uppercase tracking-widest text-violet-400 mb-3">Installation</div>
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">Step-by-Step <span class="gradient-text">Setup Guide</span></h2>
+      <p class="text-zinc-400">14 clear steps. Copy, paste, run. No guesswork.</p>
+    </div>
+
+    <div class="space-y-6" id="stepsContainer"></div>
+  </div>
+</section>
+
+<!-- Checklist -->
+<section id="checklist" class="py-24 px-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">Verification <span class="gradient-text">Checklist</span></h2>
+      <p class="text-zinc-400">Click each item as you confirm it works.</p>
+    </div>
+
+    <div class="space-y-3 reveal" id="checklist">
+      <div class="check-item" data-id="mcp">
+        <div class="check-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+        </div>
+        <div>
+          <div class="font-semibold">MCP servers connected</div>
+          <div class="text-xs text-zinc-500 mono">claude mcp list → stitch ✓ magic ✓ firecrawl ✓</div>
+        </div>
+      </div>
+      <div class="check-item" data-id="gcloud">
+        <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div>
+          <div class="font-semibold">Google Cloud configured</div>
+          <div class="text-xs text-zinc-500 mono">gcloud config list → project = your-project</div>
+        </div>
+      </div>
+      <div class="check-item" data-id="stitch">
+        <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div>
+          <div class="font-semibold">Stitch API enabled & key set</div>
+          <div class="text-xs text-zinc-500 mono">$STITCH_API_KEY exported</div>
+        </div>
+      </div>
+      <div class="check-item" data-id="infsh">
+        <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div>
+          <div class="font-semibold">Nano Banana 2 / infsh logged in</div>
+          <div class="text-xs text-zinc-500 mono">infsh me → returns your profile</div>
+        </div>
+      </div>
+      <div class="check-item" data-id="skill">
+        <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div>
+          <div class="font-semibold">UI UX Pro Max skill present</div>
+          <div class="text-xs text-zinc-500 mono">ls .claude/skills/ui-ux-pro-max/data/</div>
+        </div>
+      </div>
+      <div class="check-item" data-id="command">
+        <div class="check-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div>
+          <div class="font-semibold">/animated-website command available</div>
+          <div class="text-xs text-zinc-500 mono">.claude/commands/animated-website.md exists</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 glass rounded-xl p-6 reveal text-center">
+      <div class="text-zinc-400 text-sm mb-2">Progress</div>
+      <div class="text-3xl font-bold"><span id="progress-count">0</span> / 6 complete</div>
+      <div class="mt-4 h-2 bg-white/5 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Recommended Workflow -->
+<section id="workflow" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">Recommended <span class="gradient-text">Workflow</span></h2>
+      <p class="text-zinc-400">A clean path from brief to shipped site.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="glass rounded-2xl p-8 reveal">
+        <div class="text-4xl mb-4">1️⃣</div>
+        <h3 class="text-xl font-bold mb-2">Write a tight brief</h3>
+        <p class="text-zinc-400 text-sm mb-4">One sentence. Name the product, the audience, and the primary CTA. Vague in, vague out.</p>
+        <div class="code-block">
+          <pre class="text-emerald-400">"Landing page for a GPU cost monitor
+targeting ML engineers; CTA = book demo."</pre>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl p-8 reveal">
+        <div class="text-4xl mb-4">2️⃣</div>
+        <h3 class="text-xl font-bold mb-2">Invoke the pipeline</h3>
+        <p class="text-zinc-400 text-sm mb-4">Inside Claude Code, type the slash command with your brief.</p>
+        <div class="code-block">
+          <pre class="text-violet-400">/animated-website <your brief></pre>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl p-8 reveal">
+        <div class="text-4xl mb-4">3️⃣</div>
+        <h3 class="text-xl font-bold mb-2">Confirm the plan</h3>
+        <p class="text-zinc-400 text-sm mb-4">Claude drafts sections, palette, and motion language. Reply <code class="mono text-emerald-400">go</code> to proceed.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-violet-500/20 border border-violet-500/40 rounded-full text-xs">Hero</span>
+          <span class="px-3 py-1 bg-pink-500/20 border border-pink-500/40 rounded-full text-xs">Features</span>
+          <span class="px-3 py-1 bg-cyan-500/20 border border-cyan-500/40 rounded-full text-xs">Social proof</span>
+          <span class="px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 rounded-full text-xs">Pricing</span>
+          <span class="px-3 py-1 bg-amber-500/20 border border-amber-500/40 rounded-full text-xs">CTA</span>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl p-8 reveal">
+        <div class="text-4xl mb-4">4️⃣</div>
+        <h3 class="text-xl font-bold mb-2">Preview & iterate</h3>
+        <p class="text-zinc-400 text-sm mb-4">Serve the generated <code class="mono text-emerald-400">index.html</code> locally.</p>
+        <div class="code-block">
+          <pre class="text-zinc-300">python3 -m http.server 8000
+<span class="text-zinc-500"># open http://localhost:8000</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-32 px-6">
+  <div class="max-w-4xl mx-auto text-center glass rounded-3xl p-12 reveal relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-pink-500/10 to-cyan-500/10 pointer-events-none"></div>
+    <div class="relative">
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">Ready to <span class="gradient-text">ship something</span>?</h2>
+      <p class="text-zinc-400 mb-8 max-w-xl mx-auto">Clone the repo, drop in your keys, and let the pipeline do the heavy lifting.</p>
+      <a href="https://github.com/ANIS151993/Animated-Website-skill" class="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition shadow-xl shadow-violet-500/40">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        Clone the repo
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="py-12 px-6 border-t border-white/5">
+  <div class="max-w-6xl mx-auto text-center text-sm text-zinc-500">
+    Built with ☕ by <a href="https://github.com/ANIS151993" class="text-zinc-300 hover:text-white">@ANIS151993</a> · Powered by <a href="https://claude.com/claude-code" class="text-zinc-300 hover:text-white">Claude Code</a>
+  </div>
+</footer>
+
+<script>
+  // Steps data
+  const steps = [
+    { n: 1,  icon: '🔌', title: 'MCP Servers', subtitle: 'The foundation of external tool access',
+      color: '139, 92, 246',
+      body: `Claude Code talks to external tools through <b>MCP (Model Context Protocol)</b> servers. You'll wire up three:<br/><br/>
+      <table class="w-full text-sm mt-2 border border-white/10 rounded-lg overflow-hidden">
+        <thead class="bg-white/5"><tr><th class="text-left p-2">MCP</th><th class="text-left p-2">Purpose</th></tr></thead>
+        <tbody class="divide-y divide-white/5">
+          <tr><td class="p-2 mono text-violet-400">stitch</td><td class="p-2 text-zinc-400">AI screen layouts</td></tr>
+          <tr><td class="p-2 mono text-violet-400">magic</td><td class="p-2 text-zinc-400">21st.dev component library</td></tr>
+          <tr><td class="p-2 mono text-violet-400">firecrawl</td><td class="p-2 text-zinc-400">Web scraping</td></tr>
+        </tbody>
+      </table>`,
+      code: 'claude mcp list' },
+
+    { n: 2, icon: '☁️', title: 'Install Google Cloud CLI', subtitle: 'Auth layer for Stitch',
+      color: '66, 133, 244',
+      body: 'Stitch is a Google product and authenticates through <code class="mono text-emerald-400">gcloud</code>. Install it once.',
+      code: '# Linux / WSL\ncurl https://sdk.cloud.google.com | bash\nexec -l $SHELL\ngcloud --version\n\n# macOS\nbrew install --cask google-cloud-sdk' },
+
+    { n: 3, icon: '🧩', title: 'Configure Google Cloud', subtitle: 'Create a project & authenticate',
+      color: '66, 133, 244',
+      body: 'Log in, create a dedicated project, and enable application-default credentials.',
+      code: 'gcloud auth login\ngcloud auth application-default login\ngcloud projects create marc-animated-website --name="Animated Website"\ngcloud config set project marc-animated-website' },
+
+    { n: 4, icon: '⚡', title: 'Enable the Stitch API', subtitle: 'Unlock layout generation',
+      color: '66, 133, 244',
+      body: 'Turn on the Stitch API for your project so the MCP can call it.',
+      code: 'gcloud services enable stitch.googleapis.com\ngcloud services list --enabled | grep stitch' },
+
+    { n: 5, icon: '🔑', title: 'Get Your Stitch API Key', subtitle: 'The bearer token for every Stitch call',
+      color: '66, 133, 244',
+      body: `1. Go to <a class="text-cyan-400 underline" href="https://stitch.withgoogle.com/" target="_blank">stitch.withgoogle.com</a> and sign in.<br/>
+             2. Open <b>Profile → API Keys → Create Key</b>.<br/>
+             3. Copy the <code class="mono text-emerald-400">AQ.Ab…</code> string and export it.`,
+      code: 'export STITCH_API_KEY="AQ.Ab8RN6Ks...your-key-here"\nexport GOOGLE_CLOUD_PROJECT="marc-animated-website"' },
+
+    { n: 6, icon: '🧪', title: 'Verify the Stitch MCP Package', subtitle: 'Confirm it starts cleanly',
+      color: '66, 133, 244',
+      body: 'Run the MCP directly with your credentials. Expect <code class="mono text-emerald-400">stitch-mcp listening on stdio</code>. Ctrl+C to exit.',
+      code: 'STITCH_API_KEY="$STITCH_API_KEY" \\\nGOOGLE_CLOUD_PROJECT="$GOOGLE_CLOUD_PROJECT" \\\ntimeout 30 npx -y stitch-mcp@latest' },
+
+    { n: 7, icon: '🧠', title: 'Add Stitch to Claude Code', subtitle: 'Register it as a permanent MCP',
+      color: '139, 92, 246',
+      body: 'Register Stitch so Claude can invoke it from any project.',
+      code: 'claude mcp add stitch \\\n  --env STITCH_API_KEY="$STITCH_API_KEY" \\\n  --env GOOGLE_CLOUD_PROJECT="$GOOGLE_CLOUD_PROJECT" \\\n  -- npx -y stitch-mcp@latest\n\n# Verify\nclaude mcp list' },
+
+    { n: 8, icon: '✨', title: '21st.dev Magic', subtitle: 'Polished component library',
+      color: '24, 24, 27',
+      body: 'Free AI-generated React/Tailwind components. No key required for basic usage.',
+      code: 'claude mcp add magic -- npx -y @21st-dev/magic@latest' },
+
+    { n: 9, icon: '🌐', title: 'Firecrawl', subtitle: 'Web scraper for reference URLs',
+      color: '255, 107, 53',
+      body: `Pull structure and copy tone from any reference URL. Get a free key at <a class="text-orange-400 underline" href="https://firecrawl.dev" target="_blank">firecrawl.dev</a>.`,
+      code: 'claude mcp add firecrawl \\\n  --env FIRECRAWL_API_KEY="fc-YOUR_KEY" \\\n  -- npx -y firecrawl-mcp' },
+
+    { n: 10, icon: '🎨', title: 'UI UX Pro Max', subtitle: 'Design system generator',
+      color: '236, 72, 153',
+      body: 'Already included in this repo at <code class="mono text-pink-400">.claude/skills/ui-ux-pro-max/</code> — <b>161 palettes · 57 font pairings · 50+ styles · 99 UX guidelines</b>. Claude auto-discovers it on startup.',
+      code: 'ls .claude/skills/ui-ux-pro-max/data/\n# colors.csv  google-fonts.csv  styles.csv  products.csv  ...' },
+
+    { n: 11, icon: '🍌', title: 'Nano Banana 2', subtitle: 'Gemini 3.1 Flash Image generation',
+      color: '255, 193, 7',
+      body: 'Install the <code class="mono text-amber-400">infsh</code> CLI, log in, and you can generate hero and feature imagery.',
+      code: 'curl -fsSL https://cli.inference.sh | sh\nexport PATH="$HOME/.local/bin:$PATH"\ninfsh login\ninfsh me\n\n# Test\ninfsh app run google/gemini-3-1-flash-image-preview \\\n  --input \'{"prompt": "futuristic dashboard hero", "aspect_ratio": "16:9"}\'' },
+
+    { n: 12, icon: '🚀', title: 'Pipeline Command', subtitle: 'The /animated-website slash command',
+      color: '16, 185, 129',
+      body: `The slash command lives at <code class="mono text-emerald-400">.claude/commands/animated-website.md</code>. Run it with or without a brief.`,
+      code: '# With a brief\n/animated-website Build a landing page for a GPU cost monitor\n\n# Or bare — Claude will ask for the brief\n/animated-website' },
+  ];
+
+  const stepsContainer = document.getElementById('stepsContainer');
+  steps.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'step-card glass rounded-2xl p-6 md:p-8 reveal';
+    el.style.setProperty('--glow', `rgba(${s.color}, 0.12)`);
+    el.style.setProperty('--glow-border', `rgba(${s.color}, 0.4)`);
+    el.style.setProperty('--glow-shadow', `rgba(${s.color}, 0.3)`);
+    el.innerHTML = `
+      <div class="flex items-start gap-4 md:gap-6">
+        <div class="step-num flex-shrink-0" style="--num-bg: linear-gradient(135deg, rgb(${s.color}), rgb(${s.color.split(',').map(n => Math.max(0, parseInt(n) - 30)).join(',')})); --num-shadow: rgba(${s.color}, .5);">
+          ${s.n}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-2xl">${s.icon}</span>
+            <h3 class="text-xl md:text-2xl font-bold">${s.title}</h3>
+          </div>
+          <p class="text-zinc-400 text-sm mb-4">${s.subtitle}</p>
+          <div class="text-zinc-300 text-sm mb-4 leading-relaxed">${s.body}</div>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre class="text-zinc-200">${escapeHtml(s.code)}</pre>
+          </div>
+        </div>
+      </div>
+    `;
+    stepsContainer.appendChild(el);
+  });
+
+  function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  function copyCode(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      const t = btn.textContent;
+      btn.textContent = '✓ Copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = t; btn.classList.remove('copied'); }, 1600);
+    });
+  }
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Progress dots
+  const sections = ['hero', 'pipeline', 'steps', 'checklist', 'workflow'];
+  const dots = document.querySelectorAll('.progress-nav .dot');
+  const scrollIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = sections.indexOf(e.target.id);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(id => { const el = document.getElementById(id); if (el) scrollIO.observe(el); });
+
+  // Checklist
+  const checkItems = document.querySelectorAll('.check-item');
+  const progressBar = document.getElementById('progress-bar');
+  const progressCount = document.getElementById('progress-count');
+  function updateProgress() {
+    const done = document.querySelectorAll('.check-item.done').length;
+    const pct = (done / checkItems.length) * 100;
+    progressBar.style.width = pct + '%';
+    progressCount.textContent = done;
+    localStorage.setItem('aw-checklist', JSON.stringify(
+      Array.from(checkItems).map(i => i.classList.contains('done'))
+    ));
+  }
+  checkItems.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('done');
+      updateProgress();
+    });
+  });
+  try {
+    const saved = JSON.parse(localStorage.getItem('aw-checklist') || '[]');
+    saved.forEach((d, i) => { if (d && checkItems[i]) checkItems[i].classList.add('done'); });
+    updateProgress();
+  } catch {}
+</script>
+</body>
+</html>
