@@ -14,3 +14,7 @@ node_modules/
 *.log
 *.tar.gz
 /tmp/
+
+# Local preview copies (deployed source lives in docs/dog-cafe/)
+/index.html
+/images/

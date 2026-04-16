@@ -285,6 +285,8 @@
   <a href="#steps" class="dot" data-label="Setup Steps"></a>
   <a href="#checklist" class="dot" data-label="Checklist"></a>
   <a href="#workflow" class="dot" data-label="Workflow"></a>
+  <a href="#example" class="dot" data-label="Live Example"></a>
+  <a href="#maker" class="dot" data-label="Maker"></a>
 </nav>
 
 <!-- Top bar -->
@@ -298,6 +300,7 @@
       <a href="#pipeline" class="hidden md:inline text-zinc-400 hover:text-white transition">Pipeline</a>
       <a href="#steps" class="hidden md:inline text-zinc-400 hover:text-white transition">Setup</a>
       <a href="#workflow" class="hidden md:inline text-zinc-400 hover:text-white transition">Workflow</a>
+      <a href="./dog-cafe/" class="hidden md:inline text-amber-300 hover:text-amber-200 transition font-semibold">🐶 Live Demo</a>
       <a href="https://github.com/ANIS151993/Animated-Website-skill"
          class="inline-flex items-center gap-2 bg-white text-black px-4 py-2 rounded-lg font-medium hover:scale-105 transition">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -332,6 +335,9 @@
     <div class="flex flex-wrap items-center justify-center gap-4 reveal">
       <a href="#steps" class="bg-gradient-to-r from-violet-500 to-pink-500 text-white px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-violet-500/30">
         🚀 Start Setup
+      </a>
+      <a href="./dog-cafe/" class="bg-gradient-to-r from-amber-400 to-orange-500 text-zinc-900 px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-amber-500/40">
+        🐶 See Live Example
       </a>
       <a href="https://github.com/ANIS151993/Animated-Website-skill" class="glass px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition">
         ⭐ View on GitHub
@@ -552,6 +558,37 @@ targeting ML engineers; CTA = book demo."</pre>
   </div>
 </section>
 
+<!-- Live Example showcase -->
+<section id="example" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <div class="inline-flex items-center gap-2 glass px-4 py-1.5 rounded-full text-xs text-amber-300 mb-4">
+        <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75 animate-ping"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span></span>
+        Live demo · built end-to-end with this pipeline
+      </div>
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">See it in action: <span class="gradient-text">Camelot Hound Café</span></h2>
+      <p class="text-zinc-400 max-w-2xl mx-auto">A King-Arthur-themed dog cafe — twelve knight-pup brand identity, Saxon-brews menu, Pixar-3D hero, adoption gallery, and a live map to Camelot. Generated from one short brief.</p>
+    </div>
+    <a href="./dog-cafe/" class="reveal block group glass rounded-3xl overflow-hidden border border-white/10 hover:border-amber-400/50 transition relative">
+      <div class="aspect-[16/8] relative overflow-hidden">
+        <img src="./dog-cafe/images/hero.jpg" alt="Camelot Hound Café — the Round Table of dog knights" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/30 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="text-xs uppercase tracking-widest text-amber-300 mb-2">Example Website</div>
+            <div class="text-3xl md:text-4xl font-bold mb-1">Camelot Hound Café</div>
+            <div class="text-sm text-zinc-300">Single-file build · 9 AI images · scroll reveals · responsive · accessible</div>
+          </div>
+          <span class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-500 text-zinc-900 px-6 py-3 rounded-xl font-semibold shadow-lg shadow-amber-500/40 group-hover:scale-105 transition">
+            🐶 Visit the Cafe
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
 <!-- Final CTA -->
 <section class="py-32 px-6">
   <div class="max-w-4xl mx-auto text-center glass rounded-3xl p-12 reveal relative overflow-hidden">
@@ -559,17 +596,62 @@ targeting ML engineers; CTA = book demo."</pre>
     <div class="relative">
       <h2 class="text-3xl md:text-5xl font-bold mb-4">Ready to <span class="gradient-text">ship something</span>?</h2>
       <p class="text-zinc-400 mb-8 max-w-xl mx-auto">Clone the repo, drop in your keys, and let the pipeline do the heavy lifting.</p>
-      <a href="https://github.com/ANIS151993/Animated-Website-skill" class="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition shadow-xl shadow-violet-500/40">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        Clone the repo
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="https://github.com/ANIS151993/Animated-Website-skill" class="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition shadow-xl shadow-violet-500/40">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Clone the repo
+        </a>
+        <a href="./dog-cafe/" class="inline-flex items-center gap-2 glass px-8 py-4 rounded-xl font-semibold hover:scale-105 transition">
+          🐶 See Live Example
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Maker / Author -->
+<section id="maker" class="py-20 px-6 border-t border-white/5">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-10 reveal">
+      <div class="inline-flex items-center gap-2 glass px-4 py-1.5 rounded-full text-xs text-zinc-300 mb-4">
+        <span>👤</span> About the Maker
+      </div>
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">Md Anisur Rahman Chowdhury</h2>
+      <p class="text-zinc-400 max-w-xl mx-auto">Researcher, engineer, and the author of the Animated-Website-skill pipeline. Find me across the web:</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal">
+      <a href="https://www.linkedin.com/in/md-anisur-rahman-chowdhury-15862420a" target="_blank" rel="noopener" class="glass rounded-xl p-5 flex items-center gap-3 hover:border-cyan-400/50 hover:scale-[1.02] transition">
+        <svg class="w-6 h-6 text-cyan-400 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+        <div><div class="text-xs text-zinc-500">LinkedIn</div><div class="font-semibold text-sm">md-anisur-rahman-chowdhury</div></div>
+      </a>
+      <a href="https://github.com/ANIS151993" target="_blank" rel="noopener" class="glass rounded-xl p-5 flex items-center gap-3 hover:border-violet-400/50 hover:scale-[1.02] transition">
+        <svg class="w-6 h-6 text-violet-400 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.21.09 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.31-5.46-1.34-5.46-5.94 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.54.11-3.22 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0 1 12 5.8c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.68.24 2.91.12 3.22.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.93.43.37.81 1.1.81 2.21v3.27c0 .32.22.7.83.58A12 12 0 0 0 12 0z"/></svg>
+        <div><div class="text-xs text-zinc-500">GitHub</div><div class="font-semibold text-sm">ANIS151993</div></div>
+      </a>
+      <a href="https://marcbd.site" target="_blank" rel="noopener" class="glass rounded-xl p-5 flex items-center gap-3 hover:border-emerald-400/50 hover:scale-[1.02] transition">
+        <svg class="w-6 h-6 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        <div><div class="text-xs text-zinc-500">Portfolio</div><div class="font-semibold text-sm">marcbd.site</div></div>
+      </a>
+      <a href="https://scholar.google.com/citations?user=NQyywPoAAAAJ" target="_blank" rel="noopener" class="glass rounded-xl p-5 flex items-center gap-3 hover:border-pink-400/50 hover:scale-[1.02] transition">
+        <svg class="w-6 h-6 text-pink-400 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+        <div><div class="text-xs text-zinc-500">Google Scholar</div><div class="font-semibold text-sm">View Publications</div></div>
+      </a>
+      <a href="https://www.researchgate.net/profile/Md-Anisur-Rahman-Chowdhury" target="_blank" rel="noopener" class="glass rounded-xl p-5 flex items-center gap-3 hover:border-amber-400/50 hover:scale-[1.02] transition">
+        <svg class="w-6 h-6 text-amber-400 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M19.586 0H4.414A4.414 4.414 0 0 0 0 4.414v15.172A4.414 4.414 0 0 0 4.414 24h15.172A4.414 4.414 0 0 0 24 19.586V4.414A4.414 4.414 0 0 0 19.586 0zM8.31 14.4c0 .29-.24.53-.53.53H6.31a.53.53 0 0 1-.53-.53V9.6c0-.29.24-.53.53-.53h1.47c.29 0 .53.24.53.53v4.8zm9.83-.13c.06.31-.18.66-.5.66h-1.6c-.21 0-.41-.13-.49-.33l-1.34-3.34h-1.39v3.13c0 .29-.24.54-.53.54h-1.47a.53.53 0 0 1-.53-.54V9.6c0-.29.24-.53.53-.53h3.66c1.71 0 2.78.74 2.78 2.31 0 1.06-.5 1.81-1.43 2.13l1.31 2.76z"/></svg>
+        <div><div class="text-xs text-zinc-500">ResearchGate</div><div class="font-semibold text-sm">Md-Anisur-Rahman-Chowdhury</div></div>
+      </a>
+      <a href="./dog-cafe/" class="rounded-xl p-5 flex items-center gap-3 bg-gradient-to-br from-amber-400/20 to-orange-500/20 border border-amber-400/40 hover:scale-[1.02] transition">
+        <span class="text-2xl">🐶</span>
+        <div><div class="text-xs text-amber-200">Live Example</div><div class="font-semibold text-sm">Camelot Hound Café →</div></div>
       </a>
     </div>
   </div>
 </section>
 
-<footer class="py-12 px-6 border-t border-white/5">
-  <div class="max-w-6xl mx-auto text-center text-sm text-zinc-500">
-    Built with ☕ by <a href="https://github.com/ANIS151993" class="text-zinc-300 hover:text-white">@ANIS151993</a> · Powered by <a href="https://claude.com/claude-code" class="text-zinc-300 hover:text-white">Claude Code</a>
+<footer class="py-10 px-6 border-t border-white/5">
+  <div class="max-w-6xl mx-auto text-center text-sm text-zinc-500 leading-relaxed">
+    © 2026 <a href="https://www.linkedin.com/in/md-anisur-rahman-chowdhury-15862420a" target="_blank" rel="noopener" class="font-semibold text-zinc-200 hover:text-white">Md Anisur Rahman Chowdhury</a> · All rights reserved.<br/>
+    Built with ☕ &amp; <a href="https://claude.com/claude-code" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white">Claude Code</a> · Source on <a href="https://github.com/ANIS151993/Animated-Website-skill" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white">GitHub</a>
   </div>
 </footer>
 
@@ -695,7 +777,7 @@ targeting ML engineers; CTA = book demo."</pre>
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   // Progress dots
-  const sections = ['hero', 'pipeline', 'steps', 'checklist', 'workflow'];
+  const sections = ['hero', 'pipeline', 'steps', 'checklist', 'workflow', 'example', 'maker'];
   const dots = document.querySelectorAll('.progress-nav .dot');
   const scrollIO = new IntersectionObserver((entries) => {
     entries.forEach(e => {
