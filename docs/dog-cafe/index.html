@@ -27,10 +27,11 @@ html,body{background:var(--stone);color:var(--parchment);font-family:'Fraunces',
 
 /* ── UTILITIES ─────────────────────────────────────── */
 .parchment-bg{
-  background:
+  /* background-color is a separate property so paw-bg's background-image cannot override it */
+  background-color: var(--parchment-2);
+  background-image:
     radial-gradient(ellipse at 20% 10%,rgba(139,58,46,.08),transparent 60%),
-    radial-gradient(ellipse at 80% 90%,rgba(74,30,58,.10),transparent 60%),
-    linear-gradient(180deg,var(--parchment) 0%,var(--parchment-2) 100%);
+    radial-gradient(ellipse at 80% 90%,rgba(74,30,58,.10),transparent 60%);
   color:var(--stone);
 }
 .gold-text{background:linear-gradient(180deg,var(--gold-2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;}
@@ -158,8 +159,9 @@ html,body{background:var(--stone);color:var(--parchment);font-family:'Fraunces',
   position:relative;
   border-radius:1.25rem;
   padding:1.75rem;
-  background:rgba(255,255,255,.62);
-  border:1px solid rgba(43,36,32,.1);
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(43,36,32,.15);
+  color:var(--stone);
   transition:transform .3s ease,box-shadow .3s ease;
   overflow:visible;
 }
@@ -958,28 +960,28 @@ html,body{background:var(--stone);color:var(--parchment);font-family:'Fraunces',
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
     <!-- Left: Form + Info -->
-    <div class="reveal-left">
-      <p class="font-display tracking-[0.4em] text-xs text-[var(--plum)] mb-4">⟡ VISIT THE CASTLE ⟡</p>
-      <h2 class="font-display text-4xl md:text-5xl text-[var(--stone)] leading-tight">The Way to Camelot</h2>
-      <p class="mt-5 text-[var(--stone-2)] leading-relaxed">
+    <div class="reveal-left" style="color:var(--stone);">
+      <p class="font-display tracking-[0.4em] text-xs mb-4" style="color:var(--plum);">⟡ VISIT THE CASTLE ⟡</p>
+      <h2 class="font-display text-4xl md:text-5xl leading-tight" style="color:var(--stone);">The Way to Camelot</h2>
+      <p class="mt-5 leading-relaxed" style="color:var(--stone-2);">
         You'll find us at the legendary seat of Camelot — South Cadbury, Somerset, England. The drawbridge is lowered Wednesday through Sunday. All well-mannered humans (and their dogs) most welcome.
       </p>
-      <ul class="mt-6 space-y-3.5 text-[var(--stone)]">
+      <ul class="mt-6 space-y-3.5" style="color:var(--stone);">
         <li class="flex gap-3 items-start">
-          <span class="text-[var(--gold)] font-display mt-0.5">⚔</span>
-          <span>Cadbury Castle Lane, South Cadbury, Somerset BA22 7HA, UK</span>
+          <span class="font-display mt-0.5" style="color:var(--gold);">⚔</span>
+          <span style="color:var(--stone);">Cadbury Castle Lane, South Cadbury, Somerset BA22 7HA, UK</span>
         </li>
         <li class="flex gap-3 items-start">
-          <span class="text-[var(--gold)] font-display mt-0.5">☎</span>
-          <span>+44 1963 XXXX · <em>or dispatch a raven</em></span>
+          <span class="font-display mt-0.5" style="color:var(--gold);">☎</span>
+          <span style="color:var(--stone);">+44 1963 XXXX · <em>or dispatch a raven</em></span>
         </li>
         <li class="flex gap-3 items-start">
-          <span class="text-[var(--gold)] font-display mt-0.5">✉</span>
-          <span>hail@camelothound.co.uk</span>
+          <span class="font-display mt-0.5" style="color:var(--gold);">✉</span>
+          <span style="color:var(--stone);">hail@camelothound.co.uk</span>
         </li>
         <li class="flex gap-3 items-start">
-          <span class="text-[var(--gold)] font-display mt-0.5">⏳</span>
-          <span>Wed–Sun · 08:00–18:00 · Closed on jousting tournaments</span>
+          <span class="font-display mt-0.5" style="color:var(--gold);">⏳</span>
+          <span style="color:var(--stone);">Wed–Sun · 08:00–18:00 · Closed on jousting tournaments</span>
         </li>
       </ul>
 
@@ -1033,7 +1035,7 @@ html,body{background:var(--stone);color:var(--parchment);font-family:'Fraunces',
 
       <a href="https://www.openstreetmap.org/?mlat=51.0252&mlon=-2.5297#map=15/51.0252/-2.5297"
          target="_blank" rel="noopener"
-         class="mt-4 inline-flex items-center gap-2 text-sm text-[var(--plum)] underline font-display tracking-widest hover:text-[var(--plum-2)] transition">
+         class="mt-4 inline-flex items-center gap-2 text-sm font-display tracking-widest underline transition" style="color:var(--plum);" onmouseover="this.style.color='var(--plum-2)'" onmouseout="this.style.color='var(--plum)'">
         OPEN LIVE MAP →
       </a>
     </div>
