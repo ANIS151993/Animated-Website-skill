@@ -263,6 +263,13 @@
   .check-item.done .check-box svg { opacity: 1; transform: scale(1); }
   .check-item .check-box svg { opacity: 0; transform: scale(0.5); transition: all .2s; }
 
+  /* OS toggle */
+  .os-toggle { display:flex; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:10px; padding:3px; gap:3px; }
+  .os-tab { padding:.5rem 1.5rem; border-radius:7px; font-size:.82rem; font-weight:600; cursor:pointer; transition:all .25s; color:var(--muted); background:transparent; border:none; font-family:'Space Grotesk',sans-serif; }
+  .os-tab.active { background:var(--accent-1); color:white; box-shadow:0 2px 8px -2px rgba(139,92,246,.5); }
+  .os-tab:hover:not(.active) { color:var(--text); background:rgba(255,255,255,.05); }
+  .code-label { font-size:.72rem; color:var(--muted); font-family:'JetBrains Mono',monospace; margin-bottom:.4rem; display:block; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -300,7 +307,7 @@
       <a href="#pipeline" class="hidden md:inline text-zinc-400 hover:text-white transition">Pipeline</a>
       <a href="#steps" class="hidden md:inline text-zinc-400 hover:text-white transition">Setup</a>
       <a href="#workflow" class="hidden md:inline text-zinc-400 hover:text-white transition">Workflow</a>
-      <a href="./dog-cafe/" class="hidden md:inline text-amber-300 hover:text-amber-200 transition font-semibold">🐶 Live Demo</a>
+      <a href="./dog-cafe/" target="_blank" rel="noopener noreferrer" class="hidden md:inline text-amber-300 hover:text-amber-200 transition font-semibold">🐶 Live Demo</a>
       <a href="https://github.com/ANIS151993/Animated-Website-skill"
          class="inline-flex items-center gap-2 bg-white text-black px-4 py-2 rounded-lg font-medium hover:scale-105 transition">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -336,7 +343,7 @@
       <a href="#steps" class="bg-gradient-to-r from-violet-500 to-pink-500 text-white px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-violet-500/30">
         🚀 Start Setup
       </a>
-      <a href="./dog-cafe/" class="bg-gradient-to-r from-amber-400 to-orange-500 text-zinc-900 px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-amber-500/40">
+      <a href="./dog-cafe/" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-amber-400 to-orange-500 text-zinc-900 px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-amber-500/40">
         🐶 See Live Example
       </a>
       <a href="https://github.com/ANIS151993/Animated-Website-skill" class="glass px-7 py-3.5 rounded-xl font-semibold hover:scale-105 transition">
@@ -432,7 +439,16 @@
     <div class="text-center mb-16 reveal">
       <div class="inline-block text-xs uppercase tracking-widest text-violet-400 mb-3">Installation</div>
       <h2 class="text-3xl md:text-5xl font-bold mb-4">Step-by-Step <span class="gradient-text">Setup Guide</span></h2>
-      <p class="text-zinc-400">14 clear steps. Copy, paste, run. No guesswork.</p>
+      <p class="text-zinc-400">12 clear steps. Pick your OS, copy, paste, run.</p>
+    </div>
+
+    <!-- OS Toggle -->
+    <div class="flex items-center justify-center gap-3 mb-10 reveal">
+      <span class="text-sm text-zinc-400">Your OS:</span>
+      <div class="os-toggle" id="osToggle">
+        <button class="os-tab active" data-os="bash">🐧 Linux / macOS</button>
+        <button class="os-tab" data-os="shell">🪟 Windows</button>
+      </div>
     </div>
 
     <div class="space-y-6" id="stepsContainer"></div>
@@ -569,7 +585,7 @@ targeting ML engineers; CTA = book demo."</pre>
       <h2 class="text-3xl md:text-5xl font-bold mb-4">See it in action: <span class="gradient-text">Camelot Hound Café</span></h2>
       <p class="text-zinc-400 max-w-2xl mx-auto">A King-Arthur-themed dog cafe — twelve knight-pup brand identity, Saxon-brews menu, Pixar-3D hero, adoption gallery, and a live map to Camelot. Generated from one short brief.</p>
     </div>
-    <a href="./dog-cafe/" class="reveal block group glass rounded-3xl overflow-hidden border border-white/10 hover:border-amber-400/50 transition relative">
+    <a href="./dog-cafe/" target="_blank" rel="noopener noreferrer" class="reveal block group glass rounded-3xl overflow-hidden border border-white/10 hover:border-amber-400/50 transition relative">
       <div class="aspect-[16/8] relative overflow-hidden">
         <img src="./dog-cafe/images/hero.jpg" alt="Camelot Hound Café — the Round Table of dog knights" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"/>
         <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/30 to-transparent"></div>
@@ -601,7 +617,7 @@ targeting ML engineers; CTA = book demo."</pre>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58C20.56 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z"/></svg>
           Clone the repo
         </a>
-        <a href="./dog-cafe/" class="inline-flex items-center gap-2 glass px-8 py-4 rounded-xl font-semibold hover:scale-105 transition">
+        <a href="./dog-cafe/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 glass px-8 py-4 rounded-xl font-semibold hover:scale-105 transition">
           🐶 See Live Example
         </a>
       </div>
@@ -640,7 +656,7 @@ targeting ML engineers; CTA = book demo."</pre>
         <svg class="w-6 h-6 text-amber-400 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M19.586 0H4.414A4.414 4.414 0 0 0 0 4.414v15.172A4.414 4.414 0 0 0 4.414 24h15.172A4.414 4.414 0 0 0 24 19.586V4.414A4.414 4.414 0 0 0 19.586 0zM8.31 14.4c0 .29-.24.53-.53.53H6.31a.53.53 0 0 1-.53-.53V9.6c0-.29.24-.53.53-.53h1.47c.29 0 .53.24.53.53v4.8zm9.83-.13c.06.31-.18.66-.5.66h-1.6c-.21 0-.41-.13-.49-.33l-1.34-3.34h-1.39v3.13c0 .29-.24.54-.53.54h-1.47a.53.53 0 0 1-.53-.54V9.6c0-.29.24-.53.53-.53h3.66c1.71 0 2.78.74 2.78 2.31 0 1.06-.5 1.81-1.43 2.13l1.31 2.76z"/></svg>
         <div><div class="text-xs text-zinc-500">ResearchGate</div><div class="font-semibold text-sm">Md-Anisur-Rahman-Chowdhury</div></div>
       </a>
-      <a href="./dog-cafe/" class="rounded-xl p-5 flex items-center gap-3 bg-gradient-to-br from-amber-400/20 to-orange-500/20 border border-amber-400/40 hover:scale-[1.02] transition">
+      <a href="./dog-cafe/" target="_blank" rel="noopener noreferrer" class="rounded-xl p-5 flex items-center gap-3 bg-gradient-to-br from-amber-400/20 to-orange-500/20 border border-amber-400/40 hover:scale-[1.02] transition">
         <span class="text-2xl">🐶</span>
         <div><div class="text-xs text-amber-200">Live Example</div><div class="font-semibold text-sm">Camelot Hound Café →</div></div>
       </a>
@@ -658,75 +674,169 @@ targeting ML engineers; CTA = book demo."</pre>
 <script>
   // Steps data
   const steps = [
-    { n: 1,  icon: '🔌', title: 'MCP Servers', subtitle: 'The foundation of external tool access',
+    { n: 1, icon: '🔌', title: 'MCP Servers', subtitle: 'The foundation of external tool access',
       color: '139, 92, 246',
       body: `Claude Code talks to external tools through <b>MCP (Model Context Protocol)</b> servers. You'll wire up three:<br/><br/>
       <table class="w-full text-sm mt-2 border border-white/10 rounded-lg overflow-hidden">
         <thead class="bg-white/5"><tr><th class="text-left p-2">MCP</th><th class="text-left p-2">Purpose</th></tr></thead>
         <tbody class="divide-y divide-white/5">
-          <tr><td class="p-2 mono text-violet-400">stitch</td><td class="p-2 text-zinc-400">AI screen layouts</td></tr>
-          <tr><td class="p-2 mono text-violet-400">magic</td><td class="p-2 text-zinc-400">21st.dev component library</td></tr>
-          <tr><td class="p-2 mono text-violet-400">firecrawl</td><td class="p-2 text-zinc-400">Web scraping</td></tr>
+          <tr><td class="p-2 mono text-violet-400">stitch</td><td class="p-2 text-zinc-400">AI screen layouts — Google Stitch</td></tr>
+          <tr><td class="p-2 mono text-violet-400">magic</td><td class="p-2 text-zinc-400">21st.dev polished components</td></tr>
+          <tr><td class="p-2 mono text-violet-400">firecrawl</td><td class="p-2 text-zinc-400">Web scraping for reference URLs</td></tr>
         </tbody>
       </table>`,
-      code: 'claude mcp list' },
+      bash: 'claude mcp list',
+      shell: 'claude mcp list' },
 
     { n: 2, icon: '☁️', title: 'Install Google Cloud CLI', subtitle: 'Auth layer for Stitch',
       color: '66, 133, 244',
-      body: 'Stitch is a Google product and authenticates through <code class="mono text-emerald-400">gcloud</code>. Install it once.',
-      code: '# Linux / WSL\ncurl https://sdk.cloud.google.com | bash\nexec -l $SHELL\ngcloud --version\n\n# macOS\nbrew install --cask google-cloud-sdk' },
+      body: 'Stitch is a Google product and authenticates through <code class="mono text-emerald-400">gcloud</code>. Install it once for your OS.',
+      bash: `# Linux / WSL
+curl https://sdk.cloud.google.com | bash
+exec -l $SHELL
+gcloud --version
+
+# macOS (Homebrew)
+brew install --cask google-cloud-sdk`,
+      shell: `# Windows — install via winget (recommended):
+winget install Google.CloudSDK
+
+# Or download the .exe installer from:
+# https://cloud.google.com/sdk/docs/install#windows
+# After install, restart PowerShell
+
+gcloud --version` },
 
     { n: 3, icon: '🧩', title: 'Configure Google Cloud', subtitle: 'Create a project & authenticate',
       color: '66, 133, 244',
       body: 'Log in, create a dedicated project, and enable application-default credentials.',
-      code: 'gcloud auth login\ngcloud auth application-default login\ngcloud projects create marc-animated-website --name="Animated Website"\ngcloud config set project marc-animated-website' },
+      bash: `gcloud auth login
+gcloud auth application-default login
+gcloud projects create marc-animated-website --name="Animated Website"
+gcloud config set project marc-animated-website`,
+      shell: `gcloud auth login
+gcloud auth application-default login
+gcloud projects create marc-animated-website --name="Animated Website"
+gcloud config set project marc-animated-website` },
 
     { n: 4, icon: '⚡', title: 'Enable the Stitch API', subtitle: 'Unlock layout generation',
       color: '66, 133, 244',
-      body: 'Turn on the Stitch API for your project so the MCP can call it.',
-      code: 'gcloud services enable stitch.googleapis.com\ngcloud services list --enabled | grep stitch' },
+      body: 'Turn on the Stitch API for your project. <b>Wait 1–2 minutes</b> after enabling before first use — API propagation takes a moment.',
+      bash: `gcloud services enable stitch.googleapis.com
+gcloud services list --enabled | grep stitch`,
+      shell: `gcloud services enable stitch.googleapis.com
+gcloud services list --enabled | findstr stitch` },
 
     { n: 5, icon: '🔑', title: 'Get Your Stitch API Key', subtitle: 'The bearer token for every Stitch call',
       color: '66, 133, 244',
       body: `1. Go to <a class="text-cyan-400 underline" href="https://stitch.withgoogle.com/" target="_blank">stitch.withgoogle.com</a> and sign in.<br/>
              2. Open <b>Profile → API Keys → Create Key</b>.<br/>
              3. Copy the <code class="mono text-emerald-400">AQ.Ab…</code> string and export it.`,
-      code: 'export STITCH_API_KEY="AQ.Ab8RN6Ks...your-key-here"\nexport GOOGLE_CLOUD_PROJECT="marc-animated-website"' },
+      bash: `export STITCH_API_KEY="AQ.Ab8RN6Ks...your-key-here"
+export GOOGLE_CLOUD_PROJECT="marc-animated-website"
+
+# Make it permanent across terminal sessions:
+echo 'export STITCH_API_KEY="AQ.Ab8RN6Ks...your-key-here"' >> ~/.bashrc
+echo 'export GOOGLE_CLOUD_PROJECT="marc-animated-website"' >> ~/.bashrc
+source ~/.bashrc`,
+      shell: `# PowerShell — current session:
+$env:STITCH_API_KEY = "AQ.Ab8RN6Ks...your-key-here"
+$env:GOOGLE_CLOUD_PROJECT = "marc-animated-website"
+
+# Make it permanent (User environment variables):
+[System.Environment]::SetEnvironmentVariable("STITCH_API_KEY","AQ.Ab8RN6Ks...your-key-here","User")
+[System.Environment]::SetEnvironmentVariable("GOOGLE_CLOUD_PROJECT","marc-animated-website","User")` },
 
     { n: 6, icon: '🧪', title: 'Verify the Stitch MCP Package', subtitle: 'Confirm it starts cleanly',
       color: '66, 133, 244',
-      body: 'Run the MCP directly with your credentials. Expect <code class="mono text-emerald-400">stitch-mcp listening on stdio</code>. Ctrl+C to exit.',
-      code: 'STITCH_API_KEY="$STITCH_API_KEY" \\\nGOOGLE_CLOUD_PROJECT="$GOOGLE_CLOUD_PROJECT" \\\ntimeout 30 npx -y stitch-mcp@latest' },
+      body: 'Run the MCP directly with your credentials. Expect <code class="mono text-emerald-400">stitch-mcp listening on stdio</code>. Press Ctrl+C to exit. The <code class="mono text-amber-400">timeout 30</code> wrapper prevents an infinite hang.',
+      bash: `STITCH_API_KEY="$STITCH_API_KEY" \\
+GOOGLE_CLOUD_PROJECT="$GOOGLE_CLOUD_PROJECT" \\
+timeout 30 npx -y stitch-mcp@latest`,
+      shell: `# PowerShell — set vars, then run (Ctrl+C to exit after ~5 sec):
+$env:STITCH_API_KEY = $env:STITCH_API_KEY
+$env:GOOGLE_CLOUD_PROJECT = $env:GOOGLE_CLOUD_PROJECT
+cmd /c "npx -y stitch-mcp@latest"` },
 
     { n: 7, icon: '🧠', title: 'Add Stitch to Claude Code', subtitle: 'Register it as a permanent MCP',
       color: '139, 92, 246',
-      body: 'Register Stitch so Claude can invoke it from any project.',
-      code: 'claude mcp add stitch \\\n  --env STITCH_API_KEY="$STITCH_API_KEY" \\\n  --env GOOGLE_CLOUD_PROJECT="$GOOGLE_CLOUD_PROJECT" \\\n  -- npx -y stitch-mcp@latest\n\n# Verify\nclaude mcp list' },
+      body: 'Register Stitch so Claude can invoke it from any project. Use <code class="mono text-violet-400">claude mcp add-json</code> for full JSON-field support.',
+      bash: `claude mcp add-json stitch \\
+  '{"command":"npx","args":["-y","stitch-mcp@latest"],"env":{"STITCH_API_KEY":"YOUR_STITCH_API_KEY","GOOGLE_CLOUD_PROJECT":"YOUR_PROJECT_ID"}}' \\
+  --scope user
+
+# Verify
+claude mcp list`,
+      shell: `# PowerShell — single-quoted JSON works natively:
+claude mcp add-json stitch '{"command":"cmd","args":["/c","npx","-y","stitch-mcp@latest"],"env":{"STITCH_API_KEY":"YOUR_STITCH_API_KEY","GOOGLE_CLOUD_PROJECT":"YOUR_PROJECT_ID"}}' --scope user
+
+# Verify
+claude mcp list` },
 
     { n: 8, icon: '✨', title: '21st.dev Magic', subtitle: 'Polished component library',
       color: '24, 24, 27',
-      body: 'Free AI-generated React/Tailwind components. No key required for basic usage.',
-      code: 'claude mcp add magic -- npx -y @21st-dev/magic@latest' },
+      body: 'AI-generated React/Tailwind components. Get a free API key at <a class="text-cyan-400 underline" href="https://21st.dev" target="_blank">21st.dev</a>.',
+      bash: `claude mcp add-json magic \\
+  '{"type":"stdio","command":"npx","args":["-y","@21st-dev/magic@latest"],"env":{"API_KEY":"YOUR_21ST_DEV_API_KEY"}}' \\
+  --scope user`,
+      shell: `# PowerShell — single-quoted JSON works natively:
+claude mcp add-json magic '{"type":"stdio","command":"cmd","args":["/c","npx","-y","@21st-dev/magic@latest"],"env":{"API_KEY":"YOUR_21ST_DEV_API_KEY"}}' --scope user` },
 
     { n: 9, icon: '🌐', title: 'Firecrawl', subtitle: 'Web scraper for reference URLs',
       color: '255, 107, 53',
       body: `Pull structure and copy tone from any reference URL. Get a free key at <a class="text-orange-400 underline" href="https://firecrawl.dev" target="_blank">firecrawl.dev</a>.`,
-      code: 'claude mcp add firecrawl \\\n  --env FIRECRAWL_API_KEY="fc-YOUR_KEY" \\\n  -- npx -y firecrawl-mcp' },
+      bash: `claude mcp add-json firecrawl-mcp \\
+  '{"type":"stdio","command":"npx","args":["-y","firecrawl-mcp"],"env":{"FIRECRAWL_API_KEY":"YOUR_FIRECRAWL_API_KEY"}}' \\
+  --scope user`,
+      shell: `# PowerShell — single-quoted JSON works natively:
+claude mcp add-json firecrawl-mcp '{"type":"stdio","command":"cmd","args":["/c","npx","-y","firecrawl-mcp"],"env":{"FIRECRAWL_API_KEY":"YOUR_FIRECRAWL_API_KEY"}}' --scope user` },
 
-    { n: 10, icon: '🎨', title: 'UI UX Pro Max', subtitle: 'Design system generator',
+    { n: 10, icon: '🎨', title: 'UI UX Pro Max', subtitle: 'Design system generator (bundled in repo)',
       color: '236, 72, 153',
-      body: 'Already included in this repo at <code class="mono text-pink-400">.claude/skills/ui-ux-pro-max/</code> — <b>161 palettes · 57 font pairings · 50+ styles · 99 UX guidelines</b>. Claude auto-discovers it on startup.',
-      code: 'ls .claude/skills/ui-ux-pro-max/data/\n# colors.csv  google-fonts.csv  styles.csv  products.csv  ...' },
+      body: 'Already included in this repo at <code class="mono text-pink-400">.claude/skills/ui-ux-pro-max/</code> — <b>161 palettes · 57 font pairings · 50+ styles · 99 UX guidelines</b>. No marketplace registration needed — Claude auto-discovers it on startup.',
+      bash: `ls .claude/skills/ui-ux-pro-max/data/
+# colors.csv  google-fonts.csv  styles.csv  products.csv  ...`,
+      shell: `dir .claude\\skills\\ui-ux-pro-max\\data\\
+# colors.csv  google-fonts.csv  styles.csv  products.csv  ...` },
 
     { n: 11, icon: '🍌', title: 'Nano Banana 2', subtitle: 'Gemini 3.1 Flash Image generation',
       color: '255, 193, 7',
-      body: 'Install the <code class="mono text-amber-400">infsh</code> CLI, log in, and you can generate hero and feature imagery.',
-      code: 'curl -fsSL https://cli.inference.sh | sh\nexport PATH="$HOME/.local/bin:$PATH"\ninfsh login\ninfsh me\n\n# Test\ninfsh app run google/gemini-3-1-flash-image-preview \\\n  --input \'{"prompt": "futuristic dashboard hero", "aspect_ratio": "16:9"}\'' },
+      body: 'Install the <code class="mono text-amber-400">infsh</code> CLI (<code class="mono text-amber-400">inferencesh</code> is the same binary — <code class="mono text-amber-400">infsh</code> is preferred). Log in and generate hero imagery on demand.',
+      bash: `curl -fsSL https://cli.inference.sh | sh
+
+# Add infsh to PATH permanently:
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+# Verify & login:
+infsh --version
+infsh login
+infsh me
+
+# Test image generation:
+infsh app run google/gemini-3-1-flash-image-preview \\
+  --input '{"prompt": "futuristic dashboard hero", "aspect_ratio": "16:9"}'`,
+      shell: `# Nano Banana 2 requires Git Bash or WSL2 on Windows
+# Native PowerShell is NOT supported — open Git Bash, then run:
+curl -fsSL https://cli.inference.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+infsh login
+infsh me` },
 
     { n: 12, icon: '🚀', title: 'Pipeline Command', subtitle: 'The /animated-website slash command',
       color: '16, 185, 129',
-      body: `The slash command lives at <code class="mono text-emerald-400">.claude/commands/animated-website.md</code>. Run it with or without a brief.`,
-      code: '# With a brief\n/animated-website Build a landing page for a GPU cost monitor\n\n# Or bare — Claude will ask for the brief\n/animated-website' },
+      body: `The slash command lives at <code class="mono text-emerald-400">.claude/commands/animated-website.md</code>. Run it inside Claude Code with your brief.`,
+      bash: `# With a brief:
+/animated-website Build a landing page for a GPU cost monitor
+
+# Or bare — Claude will ask for the brief:
+/animated-website`,
+      shell: `# With a brief:
+/animated-website Build a landing page for a GPU cost monitor
+
+# Or bare — Claude will ask for the brief:
+/animated-website` },
   ];
 
   const stepsContainer = document.getElementById('stepsContainer');
@@ -748,9 +858,19 @@ targeting ML engineers; CTA = book demo."</pre>
           </div>
           <p class="text-zinc-400 text-sm mb-4">${s.subtitle}</p>
           <div class="text-zinc-300 text-sm mb-4 leading-relaxed">${s.body}</div>
-          <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-            <pre class="text-zinc-200">${escapeHtml(s.code)}</pre>
+          <div class="bash-block">
+            <span class="code-label">🐧 Bash — Linux · macOS · WSL</span>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="text-zinc-200">${escapeHtml(s.bash)}</pre>
+            </div>
+          </div>
+          <div class="shell-block" style="display:none">
+            <span class="code-label">🪟 PowerShell — Windows</span>
+            <div class="code-block">
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre class="text-zinc-200">${escapeHtml(s.shell)}</pre>
+            </div>
           </div>
         </div>
       </div>
@@ -769,6 +889,16 @@ targeting ML engineers; CTA = book demo."</pre>
       setTimeout(() => { btn.textContent = t; btn.classList.remove('copied'); }, 1600);
     });
   }
+
+  // OS Toggle
+  document.getElementById('osToggle').querySelectorAll('.os-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const os = tab.dataset.os;
+      document.querySelectorAll('.os-tab').forEach(t => t.classList.toggle('active', t.dataset.os === os));
+      document.querySelectorAll('.bash-block').forEach(el => el.style.display = os === 'bash' ? 'block' : 'none');
+      document.querySelectorAll('.shell-block').forEach(el => el.style.display = os === 'shell' ? 'block' : 'none');
+    });
+  });
 
   // Scroll reveal
   const io = new IntersectionObserver((entries) => {
