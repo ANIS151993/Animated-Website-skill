@@ -774,6 +774,46 @@ targeting ML engineers; CTA = book demo."</pre>
         </div>
       </div>
     </a>
+
+    <!-- Brief used to generate this demo -->
+    <div class="reveal mt-10 glass rounded-2xl border border-white/10 overflow-hidden">
+      <button id="brief-toggle" onclick="toggleBrief()" class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/5 transition group">
+        <div class="flex items-center gap-3">
+          <span class="text-amber-300 text-lg">📋</span>
+          <span class="font-semibold text-white">View the exact brief used to build this demo</span>
+        </div>
+        <svg id="brief-chevron" class="w-5 h-5 text-zinc-400 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div id="brief-body" class="hidden px-6 pb-6">
+        <div class="border-t border-white/10 pt-5 space-y-5 text-sm text-zinc-300 leading-relaxed">
+          <div>
+            <div class="text-xs uppercase tracking-widest text-amber-300 mb-2 font-semibold">Brief</div>
+            <p class="text-white font-semibold text-base">Animated "Dog Café Camelot" Website</p>
+            <p class="text-zinc-400 mt-1">Create a visually rich, animated website for a fantasy-themed Dog Café inspired by the legend of Camelot.</p>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-widest text-violet-300 mb-2 font-semibold">Hero Section</div>
+            <p>A cinematic background inspired by the Round Table of Camelot. Around the table, stylized 3D Pixar-like dogs representing the Twelve Knights, along with characters inspired by Lady Guinevere and Merlin. Subtle animations: floating particles, glowing candles, gentle character movements.</p>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-widest text-violet-300 mb-2 font-semibold">Menu / Brews Section</div>
+            <p>A "Brews of Camelot" section featuring fictional drinks inspired by Saxon-era beverages like mead and herbal infusions — magical legendary drinks with playful names, animated icons, and hover effects.</p>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-widest text-violet-300 mb-2 font-semibold">Testimonials Section</div>
+            <p>Testimonials from dog owners as stylized 3D Pixar-like characters alongside their dogs, with light animations: blinking, tail wagging, speech bubbles.</p>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-widest text-violet-300 mb-2 font-semibold">Adoptable Dogs Gallery</div>
+            <p>Interactive gallery of adoptable dogs in 3D Pixar style. Each card: dog image, name and short story, "Adopt Me" button with hover animation. Filters by age, breed, and temperament with smooth transitions.</p>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-widest text-violet-300 mb-2 font-semibold">Contact / Location Section</div>
+            <p>A fantasy map pointing to Camelot in England with animated map markers, a contact form, and café details (hours, email, etc.).</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1122,6 +1162,13 @@ infsh me` },
     saved.forEach((d, i) => { if (d && checkItems[i]) checkItems[i].classList.add('done'); });
     updateProgress();
   } catch {}
+
+function toggleBrief() {
+  const body = document.getElementById('brief-body');
+  const chevron = document.getElementById('brief-chevron');
+  body.classList.toggle('hidden');
+  chevron.style.transform = body.classList.contains('hidden') ? '' : 'rotate(180deg)';
+}
 </script>
 </body>
 </html>
